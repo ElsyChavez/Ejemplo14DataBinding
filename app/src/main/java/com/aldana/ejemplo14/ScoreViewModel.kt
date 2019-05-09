@@ -1,8 +1,12 @@
 package com.aldana.ejemplo14
 
-import androidx.lifecycle.ViewModel
+import androidx.databinding.ObservableField
 
-class ScoreViewModel : ViewModel() {
-    var scoreTeamA = 0
-    var scoreTeamB = 0
+
+
+class ScoreViewModel {
+
+    val scoreTeamA = ObservableField<String>()
+    val scoreTeamB = ObservableField<String>()
+
 }

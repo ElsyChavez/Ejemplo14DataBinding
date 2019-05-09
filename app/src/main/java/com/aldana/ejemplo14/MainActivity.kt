@@ -4,32 +4,29 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.aldana.ejemplo14.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var scoreViewModel: ScoreViewModel
+    private var scoreViewModel = ScoreViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        scoreViewModel = ViewModelProviders.of(this).get(ScoreViewModel::class.java)
+        if (savedInstanceState != null) {
+            scoreViewModel.scoreTeamA.set(savedInstanceState.getString("keyA"))
+            scoreViewModel.scoreTeamB.set(savedInstanceState.getString("keyB"))
+        } else {
+            scoreViewModel.scoreTeamA.set("0")
+            scoreViewModel.scoreTeamB.set("0")
+        }
 
-        displayScore(
-            tv_score_team_a,
-            scoreViewModel.scoreTeamA
-        )
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        displayScore(
-            tv_score_team_b,
-            scoreViewModel.scoreTeamB
-        )
-
-        // TODO: El ViewModel es restaurado si ya existía, si no, se crea uno nuevo.
-        // TODO: Recuerde que el ViewModel solo sobrevive a cambios de configuración y no a la destrucción de la aplicación
-
+        binding.score = scoreViewModel
     }
 
 
